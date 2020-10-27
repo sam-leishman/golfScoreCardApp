@@ -1,5 +1,19 @@
-.test {
-  background-color: blueviolet;
+.header {
+  background-color: gray;
+}
+
+.scorecard {
+  background-color: whitesmoke;
+  overflow-x: scroll;
+}
+.scorecard table {
+  border: 2px solid gray;
+  width: 100%;
+  margin-top: 25px;
+}
+.scorecard table th, .scorecard table td {
+  border: 1px solid gray;
+  min-width: 75px;
 }
 
 /*# sourceMappingURL=style.css.map */
