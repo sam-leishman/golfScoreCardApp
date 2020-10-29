@@ -15,5 +15,17 @@
   border: 1px solid gray;
   min-width: 75px;
 }
+.scorecard table .black {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.scorecard table .blue {
+  background-color: rgba(0, 0, 255, 0.3);
+}
+.scorecard table .white {
+  background-color: white;
+}
+.scorecard table .red {
+  background-color: rgba(255, 0, 0, 0.3);
+}
 
 /*# sourceMappingURL=style.css.map */
