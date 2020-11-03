@@ -30,3 +30,23 @@
         }
     }
 }
+
+// courses.html
+.courses {
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-around;
+    height: 100vh;
+
+    .course {
+        background-color: lightcoral;
+        margin: auto 0;
+        border: 2px solid black;
+        height: 400px;
+        width: 300px;
+
+        &:hover {
+            box-shadow: 0px 0px 5px black;
+        }
+    }
+}

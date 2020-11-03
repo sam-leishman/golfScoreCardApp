@@ -28,4 +28,21 @@
   background-color: rgba(255, 0, 0, 0.3);
 }
 
+.courses {
+  background-color: lightblue;
+  display: flex;
+  justify-content: space-around;
+  height: 100vh;
+}
+.courses .course {
+  background-color: lightcoral;
+  margin: auto 0;
+  border: 2px solid black;
+  height: 400px;
+  width: 300px;
+}
+.courses .course:hover {
+  box-shadow: 0px 0px 5px black;
+}
+
 /*# sourceMappingURL=style.css.map */
