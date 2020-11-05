@@ -7,6 +7,15 @@
 .header {
     background-color: darkslategray;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        flex-grow: 3;
+    }
 }
 
 .scorecard {
