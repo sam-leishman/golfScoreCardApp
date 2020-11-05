@@ -1,5 +1,12 @@
+%backgroundimage {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 .header {
-    background-color: gray;
+    background-color: darkslategray;
+    color: white;
 }
 
 .scorecard {
@@ -33,20 +40,37 @@
 
 // courses.html
 .courses {
-    background-color: lightblue;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
-    height: 100vh;
+    align-items: center;
 
     .course {
-        background-color: lightcoral;
-        margin: auto 0;
+        margin-bottom: 50px;
         border: 2px solid black;
-        height: 400px;
-        width: 300px;
+        height: 300px;
+        width: 100vw;
 
         &:hover {
-            box-shadow: 0px 0px 5px black;
+            box-shadow: 0px 0px 10px black;
         }
+
+        h3 {
+            color: black;
+            -webkit-text-stroke: 0.5px white;
+        }
+    }
+
+    .fox-hollow {
+        background-image: url("https://swingbyswing-b9.s3.amazonaws.com/photo/in-round/12486769/uploaded-photo43828077-480x360.png");
+        @extend %backgroundimage;
+    }
+    .thanksgiving-point {
+        background-image: url("https://swingbyswing-b9.s3.amazonaws.com/photo/in-round/10112953/uploaded-photo68921726-480x270.png");
+        @extend %backgroundimage;
+    }
+    .spanish-oaks {
+        background-image: url("https://swingbyswing-b9.s3.amazonaws.com/photo/in-round/12399619/uploaded-photo58903008-480x360.png");
+        @extend %backgroundimage;
     }
 }
