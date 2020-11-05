@@ -30,15 +30,26 @@ function getCourse(courseId) {
         .then((data) => console.log(data.data));
 }
 
+function writeCard(courseId) {
+    cards.forEach(card => {
+        let cardHtml = `
+            <div>
+                <img src="${card.image}">
+            </div>
+        `;
+        document.getElementById('asdf').innerHTML += cardHtml;
+    });
+}
+
 foxHollowCourse.addEventListener('click', e => {
     getCourse(18300);
-    window.location = './index.html'
+    window.location = './enterinfo.html'
 })
 thanksgivingPointCourse.addEventListener('click', e => {
     getCourse(11819);
-    window.location = './index.html'
+    window.location = './enterinfo.html'
 })
 spanishOaksCourse.addEventListener('click', e => {
     getCourse(19002);
-    window.location = './index.html'
+    window.location = './enterinfo.html'
 })

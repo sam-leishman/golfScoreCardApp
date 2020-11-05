@@ -83,3 +83,47 @@
         @extend %backgroundimage;
     }
 }
+
+// enterinfo.html
+.enter-params {
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+.select-wrap {
+    border: 1px solid #777;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 0 0 5px;
+    padding-bottom: 0;
+    background-color:#ebebeb;
+
+    label {
+        font-size:10px;
+        text-transform: uppercase;
+        color: #777;
+        padding: 2px 8px 0;
+    }
+
+    select {
+        background-color: #ebebeb;
+        border:0px;
+        height: 100%;
+        margin-right: 5px;
+    }
+
+    input {
+        height: 100%;
+    }
+}
+
+.submit-params {
+    border-radius: 5px;
+    margin: 10px;
+
+    &:hover {
+        background-color: darkslategray;
+        color: white;
+    }
+}
