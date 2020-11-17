@@ -9,6 +9,10 @@ const teebox = document.querySelector('[data-teebox]')
 const numberOfHoles = document.querySelector('[data-number-of-holes]')
 const submitParamsButton = document.querySelector('[data-submit-params-button]')
 
+const selectedCourse = document.getElementById('courses')
+const selectedTeebox = document.getElementById('teeboxes')
+const selectedHoles = document.getElementById('holes')
+
 
 
 /*
@@ -37,33 +41,40 @@ function getCourse(courseId) {
         .then((data) => console.log(data.data));
 }
 
-function writeCard(courseId) {
-    cards.forEach(card => {
-        let cardHtml = `
-            <div>
-                <img src="${card.image}">
-            </div>
-        `;
-        document.getElementById('asdf').innerHTML += cardHtml;
-    });
-}
-
-foxHollowCourse.addEventListener('click', () => {
-    document.getElementById('writtenPage').innerHTML = enterInfoPageHtml;
-    // window.location = './enterinfo.html'
-    getCourse(18300);
-})
-thanksgivingPointCourse.addEventListener('click', () => {
-    document.getElementById('writtenPage').innerHTML = enterInfoPageHtml;
-    // window.location = './enterinfo.html'
-    getCourse(11819);
-})
-spanishOaksCourse.addEventListener('click', () => {
-    document.getElementById('writtenPage').innerHTML = enterInfoPageHtml;
-    // window.location = './enterinfo.html'
-    getCourse(19002);
-})
-
 submitParamsButton.addEventListener('click', () => {
-    window.location = './index.html'
+    // document.getElementById('writtenPage').innerHTML = cardPageHtml;
+    // window.location = './card.html'
+    if (selectedCourse.value == 'foxHollow') {
+        console.log('fox')
+    }
+    if (selectedCourse.value == 'thanksgivingPoint') {
+        console.log('thank')
+    }
+    if (selectedCourse.value == 'spanishOaks') {
+        console.log('spain')
+    }
+
+    if (selectedTeebox.value == 'black') {
+        console.log('black')
+    }
+    if (selectedTeebox.value == 'blue') {
+        console.log('blue')
+    }
+    if (selectedTeebox.value == 'white') {
+        console.log('white')
+    }
+    if (selectedTeebox.value == 'red') {
+        console.log('red')
+    }
+
+    if (selectedHoles.value == '9') {
+        console.log('nine')
+    }
+    if (selectedHoles.value == '18') {
+        console.log('eighteen')
+    }
 })
+
+// getCourse(18300);
+// getCourse(11819);
+// getCourse(19002);
