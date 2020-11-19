@@ -53,29 +53,29 @@
                         <td>OUT</td>
                     </tr>
                     <tr id="cardTeeboxes">
-                        <th>Color</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <th>Yards</th>
+                        <td id="yards1"></td>
+                        <td id="yards2"></td>
+                        <td id="yards3"></td>
+                        <td id="yards4"></td>
+                        <td id="yards5"></td>
+                        <td id="yards6"></td>
+                        <td id="yards7"></td>
+                        <td id="yards8"></td>
+                        <td id="yards9"></td>
                         <td></td>
                     </tr>
                     <tr>
                         <th>Handicap</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td id="hcp1"></td>
+                        <td id="hcp2"></td>
+                        <td id="hcp3"></td>
+                        <td id="hcp4"></td>
+                        <td id="hcp5"></td>
+                        <td id="hcp6"></td>
+                        <td id="hcp7"></td>
+                        <td id="hcp8"></td>
+                        <td id="hcp9"></td>
                         <td></td>
                     </tr>
                     <tr id="player1Row">
@@ -157,11 +157,12 @@
                 </div>
                 <div class="select-wrap">
                     <label for="teeboxes">Choose your teebox:</label>
-                    <select name="teeboxes" id="teeboxes" onchange="populatePar(this.value)"></select>
+                    <select name="teeboxes" id="teeboxes"></select>
                 </div>
                 <div class="select-wrap">
                     <label for="holes">How many holes?:</label>
                     <select name="holes" id="holes">
+                        <option></option>
                         <option value="9">9</option>
                         <option value="18">18</option>
                     </select>
