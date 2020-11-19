@@ -63,7 +63,6 @@ function checkHoles() {
         $('#uptonine > tbody > tr:not(#topRow)').append('<td class="totalCell"></td>')
         $('#cardTeeboxes td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
         $('#parRow td:last-child').attr('id', 'totalPar')
-        $('#handicapRow td:last-child').attr('id', 'totalHcp')
     }
     if (selectedHoles.value == '18') {
         document.getElementById('scorecard').innerHTML += `
@@ -108,21 +107,21 @@ function checkHoles() {
                 <td id="hcp16"></td>
                 <td id="hcp17"></td>
                 <td id="hcp18"></td>
-                <td id="inHcp"></td>
+                <td></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="player1Row2" class="playerRow">
                 <td id="player1Name2">player1</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td id="p1h10"></td>
+                <td id="p1h11"></td>
+                <td id="p1h12"></td>
+                <td id="p1h13"></td>
+                <td id="p1h14"></td>
+                <td id="p1h15"></td>
+                <td id="p1h16"></td>
+                <td id="p1h17"></td>
+                <td id="p1h18"></td>
+                <td class="noEdit"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="player2Row2" class="playerRow">
@@ -136,7 +135,7 @@ function checkHoles() {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td class="noEdit"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="player3Row2" class="playerRow">
@@ -150,7 +149,7 @@ function checkHoles() {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td class="noEdit"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="player4Row2" class="playerRow">
@@ -164,7 +163,7 @@ function checkHoles() {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td class="noEdit"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="parRow2">
@@ -186,7 +185,6 @@ function checkHoles() {
 
         $('#cardTeeboxes2 td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
         $('#parRow2 td:last-child').attr('id', 'totalPar')
-        $('#handicapRow2 td:last-child').attr('id', 'totalHcp')
 
 
         if (player1Name.value != '') {
@@ -232,14 +230,11 @@ function populateCard(teeboxIndex, numberOfHoles) {
 
             let totalYards = 0;
             let totalPar = 0;
-            let totalHcp = 0;
 
             let outYards = 0;
             let outPar = 0;
-            let outHcp = 0;
             let inYards = 0;
             let inPar = 0;
-            let inHcp = 0;
 
             for (let i = 0; i < numberOfHoles; i++) {
                 const currentHole = data.data.holes[i];
@@ -253,11 +248,9 @@ function populateCard(teeboxIndex, numberOfHoles) {
 
                 totalYards += holeYards;
                 totalPar += holePar;
-                totalHcp += holeHcp;
             }
             document.getElementById('totalYards').innerText = totalYards;
             document.getElementById('totalPar').innerText = totalPar;
-            document.getElementById('totalHcp').innerText = totalHcp;
 
             // Finds the OUT totals
             for (let i = 0; i < 9; i++) {
@@ -265,11 +258,9 @@ function populateCard(teeboxIndex, numberOfHoles) {
                 const holeTeebox = currentHole.teeBoxes[teeboxIndex];
                 const holePar = holeTeebox.par;
                 const holeYards = holeTeebox.yards;
-                const holeHcp = holeTeebox.hcp;
 
                 outYards += holeYards;
                 outPar += holePar;
-                outHcp += holeHcp;
             }
 
             // Finds the IN totals
@@ -278,26 +269,39 @@ function populateCard(teeboxIndex, numberOfHoles) {
                 const holeTeebox = currentHole.teeBoxes[teeboxIndex];
                 const holePar = holeTeebox.par;
                 const holeYards = holeTeebox.yards;
-                const holeHcp = holeTeebox.hcp;
 
                 inYards += holeYards;
                 inPar += holePar;
-                inHcp += holeHcp;
             }
 
             // Applies OUT/IN totals
             if (numberOfHoles == 18) {
                 document.getElementById('outYards').innerText = outYards;
                 document.getElementById('outPar').innerText = outPar;
-                document.getElementById('outHcp').innerText = outHcp;
                 document.getElementById('inYards').innerText = inYards;
                 document.getElementById('inPar').innerText = inPar;
-                document.getElementById('inHcp').innerText = inHcp;
             }
             // const teeColor = data.data.holes[0].teeboxes[teeboxIndex].teeHexColor
             // document.getElementById('cardTeeboxes').style.backgroundColor = teeColor;
         })
 }
+
+
+function totalPlayers() {
+    let howManyHoles = 0;
+    if (selectedHoles.value == 9) {
+        howManyHoles = 9
+    } else if (selectedHoles.value == 18) {
+        howManyHoles = 18
+    }
+
+    for (let i = 0; i < howManyHoles; i++) {
+        let currentScore = document.getElementById(`p1h${i + 1}`)
+        console.log(currentScore)
+        
+    }
+}
+
 
 submitParamsButton.addEventListener('click', () => {
 
@@ -307,7 +311,7 @@ submitParamsButton.addEventListener('click', () => {
         console.log('Must select a course, teebox, and hole!!!1!! >:(')
     } else {
 
-        let numberHoles = 0;
+        let numberHoles = 0; // Passed into populateCard()
         if (selectedHoles.value == 9) {
             numberHoles = 9
         } else if (selectedHoles.value == 18) {
@@ -341,7 +345,16 @@ submitParamsButton.addEventListener('click', () => {
         } else {
             $('#player4Row').remove();
         }
+
+        // Contenteditable cells except for name and totals
+        $('.playerRow td').attr('contenteditable', 'true')
+        $('.playerRow td:first-child').attr('contenteditable', 'false')
+        $('.playerRow td:last-child').attr('contenteditable', 'false')
+        $('.noEdit').attr('contenteditable', 'false')
         
+
+        $('#pageContent').append('<button class="finish-button" onclick="totalPlayers()">Finish</button>')
+
         document.getElementById('preGameMessage').innerText = '';
         document.getElementById('entireEnterParams').innerHTML = '';
     }
