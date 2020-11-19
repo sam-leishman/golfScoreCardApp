@@ -51,10 +51,19 @@ function populateCourses(courses) {
 
 function checkHoles() {
     if (selectedHoles.value == '9') {
+        // removes OUT column ===============
+        $('#topRow td:last-child').remove();
+        $('#cardTeeboxes td:last-child').remove();
+        $('#handicapRow td:last-child').remove();
+        $('.playerRow td:last-child').remove();
+        $('#parRow td:last-child').remove();
+        // ==================================
+
         $('#topRow').append('<td class="totalCell"><b>TOTAL</b></td>')
         $('#uptonine > tbody > tr:not(#topRow)').append('<td class="totalCell"></td>')
         $('#cardTeeboxes td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
         $('#parRow td:last-child').attr('id', 'totalPar')
+        $('#handicapRow td:last-child').attr('id', 'totalHcp')
     }
     if (selectedHoles.value == '18') {
         document.getElementById('scorecard').innerHTML += `
@@ -85,10 +94,10 @@ function checkHoles() {
                 <td id="yards16"></td>
                 <td id="yards17"></td>
                 <td id="yards18"></td>
-                <td></td>
+                <td id="inYards"></td>
                 <td class="totalCell"></td>
             </tr>
-            <tr>
+            <tr id="handicapRow2">
                 <th>Handicap</th>
                 <td id="hcp10"></td>
                 <td id="hcp11"></td>
@@ -99,10 +108,10 @@ function checkHoles() {
                 <td id="hcp16"></td>
                 <td id="hcp17"></td>
                 <td id="hcp18"></td>
-                <td></td>
+                <td id="inHcp"></td>
                 <td class="totalCell"></td>
             </tr>
-            <tr id="player1Row2">
+            <tr id="player1Row2" class="playerRow">
                 <td id="player1Name2">player1</td>
                 <td></td>
                 <td></td>
@@ -116,7 +125,7 @@ function checkHoles() {
                 <td></td>
                 <td class="totalCell"></td>
             </tr>
-            <tr id="player2Row2">
+            <tr id="player2Row2" class="playerRow">
                 <td id="player2Name2">player2</td>
                 <td></td>
                 <td></td>
@@ -130,7 +139,7 @@ function checkHoles() {
                 <td></td>
                 <td class="totalCell"></td>
             </tr>
-            <tr id="player3Row2">
+            <tr id="player3Row2" class="playerRow">
                 <td id="player3Name2">player3</td>
                 <td></td>
                 <td></td>
@@ -144,7 +153,7 @@ function checkHoles() {
                 <td></td>
                 <td class="totalCell"></td>
             </tr>
-            <tr id="player4Row2">
+            <tr id="player4Row2" class="playerRow">
                 <td id="player4Name2">player4</td>
                 <td></td>
                 <td></td>
@@ -169,7 +178,7 @@ function checkHoles() {
                 <td id="par16"></td>
                 <td id="par17"></td>
                 <td id="par18"></td>
-                <td></td>
+                <td id="inPar"></td>
                 <td class="totalCell"></td>
             </tr>
         </table>
@@ -177,6 +186,7 @@ function checkHoles() {
 
         $('#cardTeeboxes2 td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
         $('#parRow2 td:last-child').attr('id', 'totalPar')
+        $('#handicapRow2 td:last-child').attr('id', 'totalHcp')
 
 
         if (player1Name.value != '') {
@@ -222,6 +232,15 @@ function populateCard(teeboxIndex, numberOfHoles) {
 
             let totalYards = 0;
             let totalPar = 0;
+            let totalHcp = 0;
+
+            let outYards = 0;
+            let outPar = 0;
+            let outHcp = 0;
+            let inYards = 0;
+            let inPar = 0;
+            let inHcp = 0;
+
             for (let i = 0; i < numberOfHoles; i++) {
                 const currentHole = data.data.holes[i];
                 const holeTeebox = currentHole.teeBoxes[teeboxIndex];
@@ -234,9 +253,47 @@ function populateCard(teeboxIndex, numberOfHoles) {
 
                 totalYards += holeYards;
                 totalPar += holePar;
+                totalHcp += holeHcp;
             }
             document.getElementById('totalYards').innerText = totalYards;
             document.getElementById('totalPar').innerText = totalPar;
+            document.getElementById('totalHcp').innerText = totalHcp;
+
+            // Finds the OUT totals
+            for (let i = 0; i < 9; i++) {
+                const currentHole = data.data.holes[i];
+                const holeTeebox = currentHole.teeBoxes[teeboxIndex];
+                const holePar = holeTeebox.par;
+                const holeYards = holeTeebox.yards;
+                const holeHcp = holeTeebox.hcp;
+
+                outYards += holeYards;
+                outPar += holePar;
+                outHcp += holeHcp;
+            }
+
+            // Finds the IN totals
+            for (let i = 9; i < 18; i++) {
+                const currentHole = data.data.holes[i];
+                const holeTeebox = currentHole.teeBoxes[teeboxIndex];
+                const holePar = holeTeebox.par;
+                const holeYards = holeTeebox.yards;
+                const holeHcp = holeTeebox.hcp;
+
+                inYards += holeYards;
+                inPar += holePar;
+                inHcp += holeHcp;
+            }
+
+            // Applies OUT/IN totals
+            if (numberOfHoles == 18) {
+                document.getElementById('outYards').innerText = outYards;
+                document.getElementById('outPar').innerText = outPar;
+                document.getElementById('outHcp').innerText = outHcp;
+                document.getElementById('inYards').innerText = inYards;
+                document.getElementById('inPar').innerText = inPar;
+                document.getElementById('inHcp').innerText = inHcp;
+            }
             // const teeColor = data.data.holes[0].teeboxes[teeboxIndex].teeHexColor
             // document.getElementById('cardTeeboxes').style.backgroundColor = teeColor;
         })
