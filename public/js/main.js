@@ -40,7 +40,7 @@ function getCourse(courseId) {
 }
 
 function populateCourses(courses) {
-    let html = `<option></option>`;
+    let html = `<option value=""></option>`;
     courses.forEach(course => {
         html += `
             <option value="${course.id}">${course.name}</option>
@@ -51,28 +51,28 @@ function populateCourses(courses) {
 
 function checkHoles() {
     if (selectedHoles.value == '9') {
-        console.log('nine')
-        $('#topRow').append('<td class="totalCell">TOTAL</td>')
+        $('#topRow').append('<td class="totalCell"><b>TOTAL</b></td>')
         $('#uptonine > tbody > tr:not(#topRow)').append('<td class="totalCell"></td>')
+        $('#cardTeeboxes td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
+        $('#parRow td:last-child').attr('id', 'totalPar')
     }
     if (selectedHoles.value == '18') {
-        console.log('eighteen')
         document.getElementById('scorecard').innerHTML += `
         <table id="uptoeighteen">
             <tr>
                 <th>Hole</th>
-                <td>10</td>
-                <td>11</td>
-                <td>12</td>
-                <td>13</td>
-                <td>14</td>
-                <td>15</td>
-                <td>16</td>
-                <td>17</td>
-                <td>18</td>
-                <td>IN</td>
+                <td><b>10</b></td>
+                <td><b>11</b></td>
+                <td><b>12</b></td>
+                <td><b>13</b></td>
+                <td><b>14</b></td>
+                <td><b>15</b></td>
+                <td><b>16</b></td>
+                <td><b>17</b></td>
+                <td><b>18</b></td>
+                <td><b>IN</b></td>
                 <!-- If 18 holes are chosen -->
-                <td class="totalCell">TOTAL</td>
+                <td class="totalCell"><b>TOTAL</b></td>
             </tr>
             <tr id="cardTeeboxes2">
                 <th>Yards</th>
@@ -158,7 +158,7 @@ function checkHoles() {
                 <td></td>
                 <td class="totalCell"></td>
             </tr>
-            <tr>
+            <tr id="parRow2">
                 <th>Par</th>
                 <td id="par10"></td>
                 <td id="par11"></td>
@@ -174,23 +174,32 @@ function checkHoles() {
             </tr>
         </table>
         `;
+
+        $('#cardTeeboxes2 td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
+        $('#parRow2 td:last-child').attr('id', 'totalPar')
+
+
         if (player1Name.value != '') {
             document.getElementById('player1Name2').innerText = player1Name.value;
+            document.getElementById('player1Row2').style.color = 'blue';
         } else {
             $('#player1Row2').remove();
         }
         if (player2Name.value != '') {
             document.getElementById('player2Name2').innerText = player2Name.value;
+            document.getElementById('player2Row2').style.color = 'blue';
         } else {
             $('#player2Row2').remove();
         }
         if (player3Name.value != '') {
             document.getElementById('player3Name2').innerText = player3Name.value;
+            document.getElementById('player3Row2').style.color = 'blue';
         } else {
             $('#player3Row2').remove();
         }
         if (player4Name.value != '') {
             document.getElementById('player4Name2').innerText = player4Name.value;
+            document.getElementById('player4Row2').style.color = 'blue';
         } else {
             $('#player4Row2').remove();
         }
@@ -198,32 +207,36 @@ function checkHoles() {
 }
 
 function populateTeeboxes(teeboxes) {
-    let teeboxHtml = `<option></option>`;
+    let teeboxHtml = `<option value=""></option>`;
     teeboxes.forEach((teebox, index) => {
         teeboxHtml += `
             <option value="${index}">${teebox.teeType}</option>
         `;
     })
-    // console.log(teeboxes[0].par) // Par
     document.getElementById('teeboxes').innerHTML = teeboxHtml;
 }
 
 function populateCard(teeboxIndex, numberOfHoles) {
     coursePromise
         .then((data) => {
-            console.log(numberOfHoles)
+
+            let totalYards = 0;
+            let totalPar = 0;
             for (let i = 0; i < numberOfHoles; i++) {
                 const currentHole = data.data.holes[i];
                 const holeTeebox = currentHole.teeBoxes[teeboxIndex];
-                console.log(holeTeebox)
                 const holePar = holeTeebox.par;
                 const holeYards = holeTeebox.yards;
                 const holeHcp = holeTeebox.hcp;
                 document.getElementById(`par${currentHole.hole}`).innerText = holePar;
                 document.getElementById(`yards${currentHole.hole}`).innerText = holeYards;
                 document.getElementById(`hcp${currentHole.hole}`).innerText = holeHcp;
+
+                totalYards += holeYards;
+                totalPar += holePar;
             }
-            console.log("Here: ", data.data.holes, teeboxIndex)
+            document.getElementById('totalYards').innerText = totalYards;
+            document.getElementById('totalPar').innerText = totalPar;
             // const teeColor = data.data.holes[0].teeboxes[teeboxIndex].teeHexColor
             // document.getElementById('cardTeeboxes').style.backgroundColor = teeColor;
         })
@@ -233,6 +246,8 @@ submitParamsButton.addEventListener('click', () => {
 
     if (player1Name.value == '' && player2Name.value == '' && player3Name.value == '' && player4Name.value == '') {
         console.log('No players entered??!1?!!1!')
+    } else if (selectedCourse.value == '' || selectedTeebox.value == '' || selectedHoles.value == '') {
+        console.log('Must select a course, teebox, and hole!!!1!! >:(')
     } else {
 
         let numberHoles = 0;
@@ -247,21 +262,25 @@ submitParamsButton.addEventListener('click', () => {
     
         if (player1Name.value != '') {
             document.getElementById('player1Name').innerText = player1Name.value;
+            document.getElementById('player1Row').style.color = 'blue';
         } else {
             $('#player1Row').remove();
         }
         if (player2Name.value != '') {
             document.getElementById('player2Name').innerText = player2Name.value;
+            document.getElementById('player2Row').style.color = 'blue';
         } else {
             $('#player2Row').remove();
         }
         if (player3Name.value != '') {
             document.getElementById('player3Name').innerText = player3Name.value;
+            document.getElementById('player3Row').style.color = 'blue';
         } else {
             $('#player3Row').remove();
         }
         if (player4Name.value != '') {
             document.getElementById('player4Name').innerText = player4Name.value;
+            document.getElementById('player4Row').style.color = 'blue';
         } else {
             $('#player4Row').remove();
         }
