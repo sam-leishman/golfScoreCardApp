@@ -63,6 +63,15 @@ function checkHoles() {
         $('#uptonine > tbody > tr:not(#topRow)').append('<td class="totalCell"></td>')
         $('#cardTeeboxes td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
         $('#parRow td:last-child').attr('id', 'totalPar')
+
+        $('#player1Row td:last-child').attr('id', 'p1Total')
+        $('#player1Row td:last-child').css('font-weight', 'bold')
+        $('#player2Row td:last-child').attr('id', 'p2Total')
+        $('#player2Row td:last-child').css('font-weight', 'bold')
+        $('#player3Row td:last-child').attr('id', 'p3Total')
+        $('#player3Row td:last-child').css('font-weight', 'bold')
+        $('#player4Row td:last-child').attr('id', 'p4Total')
+        $('#player4Row td:last-child').css('font-weight', 'bold')
     }
     if (selectedHoles.value == '18') {
         document.getElementById('scorecard').innerHTML += `
@@ -121,49 +130,49 @@ function checkHoles() {
                 <td id="p1h16"></td>
                 <td id="p1h17"></td>
                 <td id="p1h18"></td>
-                <td class="noEdit"></td>
+                <td class="noEdit" id="p1In"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="player2Row2" class="playerRow">
                 <td id="player2Name2">player2</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="noEdit"></td>
+                <td id="p2h10"></td>
+                <td id="p2h11"></td>
+                <td id="p2h12"></td>
+                <td id="p2h13"></td>
+                <td id="p2h14"></td>
+                <td id="p2h15"></td>
+                <td id="p2h16"></td>
+                <td id="p2h17"></td>
+                <td id="p2h18"></td>
+                <td class="noEdit" id="p2In"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="player3Row2" class="playerRow">
                 <td id="player3Name2">player3</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="noEdit"></td>
+                <td id="p3h10"></td>
+                <td id="p3h11"></td>
+                <td id="p3h12"></td>
+                <td id="p3h13"></td>
+                <td id="p3h14"></td>
+                <td id="p3h15"></td>
+                <td id="p3h16"></td>
+                <td id="p3h17"></td>
+                <td id="p3h18"></td>
+                <td class="noEdit" id="p3In"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="player4Row2" class="playerRow">
                 <td id="player4Name2">player4</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="noEdit"></td>
+                <td id="p4h10"></td>
+                <td id="p4h11"></td>
+                <td id="p4h12"></td>
+                <td id="p4h13"></td>
+                <td id="p4h14"></td>
+                <td id="p4h15"></td>
+                <td id="p4h16"></td>
+                <td id="p4h17"></td>
+                <td id="p4h18"></td>
+                <td class="noEdit" id="p4In"></td>
                 <td class="totalCell"></td>
             </tr>
             <tr id="parRow2">
@@ -185,6 +194,29 @@ function checkHoles() {
 
         $('#cardTeeboxes2 td:last-child').attr('id', 'totalYards') // Gives ID of totalYards to the cell in the total column
         $('#parRow2 td:last-child').attr('id', 'totalPar')
+
+        $('#player1Row2 td:last-child').attr('id', 'p1Total')
+        $('#player1Row2 td:last-child').css('font-weight', 'bold')
+        $('#player2Row2 td:last-child').attr('id', 'p2Total')
+        $('#player2Row2 td:last-child').css('font-weight', 'bold')
+        $('#player3Row2 td:last-child').attr('id', 'p3Total')
+        $('#player3Row2 td:last-child').css('font-weight', 'bold')
+        $('#player4Row2 td:last-child').attr('id', 'p4Total')
+        $('#player4Row2 td:last-child').css('font-weight', 'bold')
+
+        $('#player1Row2 td:nth-last-child(2)').css('font-weight', 'bold')
+        $('#player2Row2 td:nth-last-child(2)').css('font-weight', 'bold')
+        $('#player3Row2 td:nth-last-child(2)').css('font-weight', 'bold')
+        $('#player4Row2 td:nth-last-child(2)').css('font-weight', 'bold')
+
+        $('#player1Row td:last-child').attr('id', 'p1Out')
+        $('#player1Row td:last-child').css('font-weight', 'bold')
+        $('#player2Row td:last-child').attr('id', 'p2Out')
+        $('#player2Row td:last-child').css('font-weight', 'bold')
+        $('#player3Row td:last-child').attr('id', 'p3Out')
+        $('#player3Row td:last-child').css('font-weight', 'bold')
+        $('#player4Row td:last-child').attr('id', 'p4Out')
+        $('#player4Row td:last-child').css('font-weight', 'bold')
 
 
         if (player1Name.value != '') {
@@ -295,10 +327,128 @@ function totalPlayers() {
         howManyHoles = 18
     }
 
-    for (let i = 0; i < howManyHoles; i++) {
-        let currentScore = document.getElementById(`p1h${i + 1}`)
-        console.log(currentScore)
-        
+    // Test to find letters entered
+    let test;
+    if (player1Name.value != '') {
+        for (let i = 0; i < howManyHoles; i++) {
+            const currentScore = $(`#p1h${i + 1}`).html();
+            if (/[^0-9]/.test(currentScore)) {
+                test = true;
+                break;
+            } else {
+                test = false;
+            }
+        }
+    }
+
+    if (test) {
+        $('.playerRow .totalCell').text('');
+        $('#scorecard').append('<h6 class="error-text">Only numbers are accepted</h6>')
+    } else {
+        $('.error-text').remove();
+        // Finds total scores
+        if (player1Name.value != '') {
+            let player1Total = 0;
+            for (let i = 0; i < howManyHoles; i++) {
+                const currentScore = $(`#p1h${i + 1}`).html();
+                player1Total += Number(currentScore);
+            }
+            document.getElementById('p1Total').innerText = player1Total;
+        }
+        if (player2Name.value != '') {
+            let player2Total = 0;
+            for (let i = 0; i < howManyHoles; i++) {
+                const currentScore = $(`#p2h${i + 1}`).html();
+                player2Total += Number(currentScore);
+            }
+            document.getElementById('p2Total').innerText = player2Total;
+        }
+        if (player3Name.value != '') {
+            let player3Total = 0;
+            for (let i = 0; i < howManyHoles; i++) {
+                const currentScore = $(`#p3h${i + 1}`).html();
+                player3Total += Number(currentScore);
+            }
+            document.getElementById('p3Total').innerText = player3Total;
+        }
+        if (player4Name.value != '') {
+            let player4Total = 0;
+            for (let i = 0; i < howManyHoles; i++) {
+                const currentScore = $(`#p4h${i + 1}`).html();
+                player4Total += Number(currentScore);
+            }
+            document.getElementById('p4Total').innerText = player4Total;
+        }
+
+        if (howManyHoles == 18) {
+            // Finds out scores
+            if (player1Name.value != '') {
+                let player1Out = 0;
+                for (let i = 0; i < 9; i++) {
+                    const currentScore = $(`#p1h${i + 1}`).html();
+                    player1Out += Number(currentScore);
+                }
+                document.getElementById('p1Out').innerText = player1Out;
+            }
+            if (player2Name.value != '') {
+                let player2Out = 0;
+                for (let i = 0; i < 9; i++) {
+                    const currentScore = $(`#p2h${i + 1}`).html();
+                    player2Out += Number(currentScore);
+                }
+                document.getElementById('p2Out').innerText = player2Out;
+            }
+            if (player3Name.value != '') {
+                let player3Out = 0;
+                for (let i = 0; i < 9; i++) {
+                    const currentScore = $(`#p3h${i + 1}`).html();
+                    player3Out += Number(currentScore);
+                }
+                document.getElementById('p3Out').innerText = player3Out;
+            }
+            if (player4Name.value != '') {
+                let player4Out = 0;
+                for (let i = 0; i < 9; i++) {
+                    const currentScore = $(`#p4h${i + 1}`).html();
+                    player4Out += Number(currentScore);
+                }
+                document.getElementById('p4Out').innerText = player4Out;
+            }
+
+            // Finds in scores
+            if (player1Name.value != '') {
+                let player1In = 0;
+                for (let i = 9; i < 18; i++) {
+                    const currentScore = $(`#p1h${i + 1}`).html();
+                    player1In += Number(currentScore);
+                }
+                document.getElementById('p1In').innerText = player1In;
+            }
+            if (player2Name.value != '') {
+                let player2In = 0;
+                for (let i = 9; i < 18; i++) {
+                    const currentScore = $(`#p2h${i + 1}`).html();
+                    player2In += Number(currentScore);
+                }
+                document.getElementById('p2In').innerText = player2In;
+            }
+            if (player3Name.value != '') {
+                let player3In = 0;
+                for (let i = 9; i < 18; i++) {
+                    const currentScore = $(`#p3h${i + 1}`).html();
+                    player3In += Number(currentScore);
+                }
+                document.getElementById('p3In').innerText = player3In;
+            }
+            if (player4Name.value != '') {
+                let player4In = 0;
+                for (let i = 9; i < 18; i++) {
+                    const currentScore = $(`#p4h${i + 1}`).html();
+                    player4In += Number(currentScore);
+                }
+                document.getElementById('p4In').innerText = player4In;
+            }
+        }
     }
 }
 
@@ -321,6 +471,7 @@ submitParamsButton.addEventListener('click', () => {
         checkHoles();
         populateCard(selectedTeebox.value, numberHoles);
     
+        // Enters names passed in as players
         if (player1Name.value != '') {
             document.getElementById('player1Name').innerText = player1Name.value;
             document.getElementById('player1Row').style.color = 'blue';
@@ -352,9 +503,10 @@ submitParamsButton.addEventListener('click', () => {
         $('.playerRow td:last-child').attr('contenteditable', 'false')
         $('.noEdit').attr('contenteditable', 'false')
         
-
+        // Adds submit button to total scores
         $('#pageContent').append('<button class="finish-button" onclick="totalPlayers()">Finish</button>')
 
+        // Removes enter info area
         document.getElementById('preGameMessage').innerText = '';
         document.getElementById('entireEnterParams').innerHTML = '';
     }
