@@ -341,8 +341,12 @@ function totalPlayers() {
         }
     }
 
+    toastr.options = {
+        "positionClass": "toast-bottom-center"
+    }
+
     if (test) {
-        $('.playerRow .totalCell').text('');
+        $('.playerRow .totalCell').html('');
         $('#scorecard').append('<h6 class="error-text">Only numbers are accepted</h6>')
     } else {
         $('.error-text').remove();
@@ -354,6 +358,25 @@ function totalPlayers() {
                 player1Total += Number(currentScore);
             }
             document.getElementById('p1Total').innerText = player1Total;
+
+            // Displays difference between score and par
+            const totalPar = $('#totalPar').text();
+            let difference = Number(player1Total) - Number(totalPar);
+            // Check if score is under par
+            let parStatus = '';
+            let positive = '';
+            if (difference <= 0) {
+                parStatus = 'underPar'
+                $('#p1Total').css('background-color', 'rgba(0, 128, 0, 0.2)')
+                toastr.success("Nice, player 1. You're under par!")
+            } else {
+                parStatus = 'overPar'
+                positive = '+'
+                $('#p1Total').css('background-color', 'rgba(255, 0, 0, 0.2)')
+                toastr.error("Dang, player 1. Not doing so hot...")
+            }
+
+            $('#p1Total').append(`<p class="${parStatus}">${positive}${difference}</p>`);
         }
         if (player2Name.value != '') {
             let player2Total = 0;
@@ -362,6 +385,25 @@ function totalPlayers() {
                 player2Total += Number(currentScore);
             }
             document.getElementById('p2Total').innerText = player2Total;
+
+            // Displays difference between score and par
+            const totalPar = $('#totalPar').text();
+            let difference = Number(player2Total) - Number(totalPar);
+            // Check if score is under par
+            let parStatus = '';
+            let positive = '';
+            if (difference <= 0) {
+                parStatus = 'underPar'
+                $('#p2Total').css('background-color', 'rgba(0, 128, 0, 0.2)')
+                toastr.success("Nice, player 2. You're under par!")
+            } else {
+                parStatus = 'overPar'
+                positive = '+'
+                $('#p2Total').css('background-color', 'rgba(255, 0, 0, 0.2)')
+                toastr.error("Dang, player 2. Not doing so hot...")
+            }
+
+            $('#p2Total').append(`<p class="${parStatus}">${positive}${difference}</p>`);
         }
         if (player3Name.value != '') {
             let player3Total = 0;
@@ -370,6 +412,25 @@ function totalPlayers() {
                 player3Total += Number(currentScore);
             }
             document.getElementById('p3Total').innerText = player3Total;
+
+            // Displays difference between score and par
+            const totalPar = $('#totalPar').text();
+            let difference = Number(player3Total) - Number(totalPar);
+            // Check if score is under par
+            let parStatus = '';
+            let positive = '';
+            if (difference <= 0) {
+                parStatus = 'underPar'
+                $('#p3Total').css('background-color', 'rgba(0, 128, 0, 0.2)')
+                toastr.success("Nice, player 3. You're under par!")
+            } else {
+                parStatus = 'overPar'
+                positive = '+'
+                $('#p3Total').css('background-color', 'rgba(255, 0, 0, 0.2)')
+                toastr.error("Dang, player 3. Not doing so hot...")
+            }
+
+            $('#p3Total').append(`<p class="${parStatus}">${positive}${difference}</p>`);
         }
         if (player4Name.value != '') {
             let player4Total = 0;
@@ -378,6 +439,25 @@ function totalPlayers() {
                 player4Total += Number(currentScore);
             }
             document.getElementById('p4Total').innerText = player4Total;
+
+            // Displays difference between score and par
+            const totalPar = $('#totalPar').text();
+            let difference = Number(player4Total) - Number(totalPar);
+            // Check if score is under par
+            let parStatus = '';
+            let positive = '';
+            if (difference <= 0) {
+                parStatus = 'underPar'
+                $('#p4Total').css('background-color', 'rgba(0, 128, 0, 0.2)')
+                toastr.success("Nice, player 4. You're under par!")
+            } else {
+                parStatus = 'overPar'
+                positive = '+'
+                $('#p4Total').css('background-color', 'rgba(255, 0, 0, 0.2)')
+                toastr.error("Dang, player 4. Not doing so hot...")
+            }
+
+            $('#p4Total').append(`<p class="${parStatus}">${positive}${difference}</p>`);
         }
 
         if (howManyHoles == 18) {
@@ -454,11 +534,17 @@ function totalPlayers() {
 
 
 submitParamsButton.addEventListener('click', () => {
+    $('.error-text').remove();
 
     if (player1Name.value == '' && player2Name.value == '' && player3Name.value == '' && player4Name.value == '') {
-        console.log('No players entered??!1?!!1!')
+        $('.courses').append('<h6 class="error-text">No players entered</h6>')
+        window.scrollTo(0,document.body.scrollHeight);
     } else if (selectedCourse.value == '' || selectedTeebox.value == '' || selectedHoles.value == '') {
-        console.log('Must select a course, teebox, and hole!!!1!! >:(')
+        $('.courses').append('<h6 class="error-text">Must select a course, teebox, and hole</h6>')
+        window.scrollTo(0,document.body.scrollHeight);
+    } else if (player1Name.value == (player2Name.value || player3Name.value || player4Name.value) || player2Name.value == (player1Name.value || player3Name.value || player4Name.value) || player3Name.value == (player1Name.value || player2Name.value || player4Name.value)) {
+        $('.courses').append('<h6 class="error-text">Players can\'t have the same name</h6>')
+        window.scrollTo(0,document.body.scrollHeight);
     } else {
 
         let numberHoles = 0; // Passed into populateCard()

@@ -66,18 +66,26 @@
   border-radius: 5px;
   margin: 10px;
 }
-.submit-params:hover {
-  background-color: darkslategray;
-  color: white;
-}
 
 .finish-button {
   margin: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .error-text {
   color: red;
+}
+
+.underPar {
+  color: green;
+  text-align: right;
+  margin: 0;
+}
+
+.overPar {
+  color: red;
+  text-align: right;
+  margin: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

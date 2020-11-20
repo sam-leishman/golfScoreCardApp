@@ -1,9 +1,3 @@
-%backgroundimage {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
 .header {
     background-color: darkslategray;
     color: white;
@@ -79,18 +73,25 @@
 .submit-params {
     border-radius: 5px;
     margin: 10px;
-
-    &:hover {
-        background-color: darkslategray;
-        color: white;
-    }
 }
 
 .finish-button {
     margin: 50px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .error-text {
     color: red;
+}
+
+
+.underPar {
+    color: green;
+    text-align: right;
+    margin: 0;
+}
+.overPar {
+    color: red;
+    text-align: right;
+    margin: 0;
 }
